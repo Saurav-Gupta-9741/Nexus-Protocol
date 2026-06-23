@@ -1,13 +1,10 @@
 import time
-import tiktoken
-
-# Load the official OpenAI tokenizer (same one GPT-4 uses) for rigorous benchmarking
-enc = tiktoken.get_encoding("cl100k_base")
 
 class BenchmarkEngine:
     @staticmethod
     def count_exact_tokens(text: str) -> int:
-        return len(enc.encode(text))
+        # Fallback math for Python 3.6 compatibility on college servers
+        return max(1, len(text) // 4)
 
     @staticmethod
     def calculate_english_cost(text: str) -> dict:
