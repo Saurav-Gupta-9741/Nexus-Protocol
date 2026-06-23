@@ -29,12 +29,6 @@ class OllamaClient:
             data = response.json()
             return data.get("response", "")
         except requests.exceptions.RequestException as e:
-            # Fallback for local laptop testing (when Ollama isn't running)
-            print(f"[Warning] Could not connect to Ollama at {self.base_url}. Is it running?")
-            return self._fallback_mock_response(prompt)
-            
-    def _fallback_mock_response(self, prompt: str) -> str:
-        """Used strictly for testing on your laptop before moving to the College GPU."""
-        if "NXP" in prompt or "packet" in prompt:
-            return "[NX:MSG|FROM:A|TO:B|ACT:GEN_REPORT|CTX:revenue|VAL:4.2M]"
-        return "Based on my analysis, the total revenue is $4.2M. I have generated the financial summary report."
+            # Enforce real execution by raising the error if the AI isn't running
+            print(f"[ERROR] Ollama connection failed. The AI Engine MUST be running.")
+            raise e
