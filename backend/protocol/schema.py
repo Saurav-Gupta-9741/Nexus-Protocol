@@ -1,47 +1,47 @@
+from pydantic import BaseModel, Field
+from typing import Any
+import time
+import hmac
+import hashlib
 import json
-from dataclasses import dataclass
-from typing import Dict, Any, Optional
 
-@dataclass
-class NxpPacket:
-    type: str       # REQ, RES, MSG, ERR, ACK
-    sender: str     # FROM: Agent ID
-    receiver: str   # TO: Agent ID
-    action: str = ""     # ACT: Action code
-    context: str = ""    # CTX: Short context/topic
-    value: str = ""      # VAL: The dense payload
-    
-    def serialize(self) -> str:
-        """Serializes the packet to the ultra-compressed NXP format."""
-        parts = [f"NX:{self.type}", f"FROM:{self.sender}", f"TO:{self.receiver}"]
-        if self.action: parts.append(f"ACT:{self.action}")
-        if self.context: parts.append(f"CTX:{self.context}")
-        if self.value: parts.append(f"VAL:{self.value}")
-        return f"[{'|'.join(parts)}]"
-    
+class NXPPacket(BaseModel):
+    """
+    Enterprise-grade M2M Packet Schema using Pydantic.
+    Features: Dynamic JSON params, HMAC-SHA256 signing, and TTL expiration.
+    """
+    version: str = "2.0"
+    msg_id: str = Field(default_factory=lambda: str(time.time()))
+    timestamp: float = Field(default_factory=time.time)
+    sender: str
+    receiver: str
+    params: dict[str, Any] = Field(default_factory=dict) # LLM generates freely, no enums
+    payload_ref: str | None = None
+    ttl: int = 300 # seconds before packet expires
+    checksum: str = "" # SHA-256 HMAC signature
+
+    def sign(self, secret: str):
+        # Create a dict without checksum for signing
+        data = self.model_dump(exclude={"checksum"})
+        data_str = json.dumps(data, sort_keys=True)
+        self.checksum = hmac.new(secret.encode(), data_str.encode(), hashlib.sha256).hexdigest()
+        return self
+
     @classmethod
-    def parse(cls, packet_str: str) -> 'NxpPacket':
-        """Parses an NXP format string back into a Packet object."""
-        packet_str = packet_str.strip()
-        if not (packet_str.startswith('[') and packet_str.endswith(']')):
-            raise ValueError("Invalid NXP format. Must be enclosed in []")
+    def verify_and_parse(cls, raw_json: str, secret: str):
+        data = json.loads(raw_json)
+        provided_checksum = data.get("checksum", "")
         
-        inner = packet_str[1:-1]
-        parts = inner.split('|')
+        # Verify HMAC
+        check_data = {k: v for k, v in data.items() if k != "checksum"}
+        data_str = json.dumps(check_data, sort_keys=True)
+        expected_checksum = hmac.new(secret.encode(), data_str.encode(), hashlib.sha256).hexdigest()
         
-        data = {
-            'type': '', 'sender': '', 'receiver': '',
-            'action': '', 'context': '', 'value': ''
-        }
-        
-        for part in parts:
-            if ':' not in part: continue
-            k, v = part.split(':', 1)
-            if k == 'NX': data['type'] = v
-            elif k == 'FROM': data['sender'] = v
-            elif k == 'TO': data['receiver'] = v
-            elif k == 'ACT': data['action'] = v
-            elif k == 'CTX': data['context'] = v
-            elif k == 'VAL': data['value'] = v
+        if not hmac.compare_digest(provided_checksum, expected_checksum):
+            raise ValueError("Packet checksum mismatch - possible tampering")
             
-        return cls(**data)
+        pkt = cls(**data)
+        if time.time() - pkt.timestamp > pkt.ttl:
+            raise ValueError(f"Packet expired")
+            
+        return pkt

@@ -1,0 +1,101 @@
+trial,task,cache_hit,latency_ms,tokens_used
+1,Calculate server uptime for th...,False,886.5,317
+2,Produce a revenue report for Q...,False,457.3,317
+3,Deploy the new frontend build ...,False,380.53,317
+4,Summarize customer feedback fr...,False,320.05,317
+5,Calculate server uptime for th...,True,28.01,0
+6,Send an email to the marketing...,False,354.37,317
+7,Generate Q4 revenue report...,True,26.79,0
+8,Calculate server uptime for th...,True,25.84,0
+9,Deploy the new frontend build ...,True,23.72,0
+10,Summarize customer feedback fr...,True,23.95,0
+11,Produce a revenue report for Q...,True,23.81,0
+12,Deploy the new frontend build ...,True,26.16,0
+13,Deploy the new frontend build ...,True,22.58,0
+14,Generate Q4 revenue report...,True,23.32,0
+15,Fetch inventory levels for pro...,False,537.26,317
+16,Summarize customer feedback fr...,True,25.39,0
+17,Generate the revenue report fo...,True,27.42,0
+18,Deploy the new frontend build ...,True,28.16,0
+19,Fetch inventory levels for pro...,True,29.92,0
+20,Generate the revenue report fo...,True,26.36,0
+21,Summarize customer feedback fr...,True,23.23,0
+22,Generate a revenue report for ...,True,25.32,0
+23,Send an email to the marketing...,True,28.0,0
+24,Fetch inventory levels for pro...,True,23.41,0
+25,Check error logs for the payme...,False,475.65,317
+26,Generate a revenue report for ...,True,26.48,0
+27,Send an email to the marketing...,True,32.07,0
+28,Generate Q4 revenue report...,True,30.41,0
+29,Calculate server uptime for th...,True,32.54,0
+30,Produce a revenue report for Q...,True,31.03,0
+31,Check error logs for the payme...,True,26.7,0
+32,Generate Q4 revenue report...,True,25.99,0
+33,Summarize customer feedback fr...,True,25.18,0
+34,Generate Q4 revenue report...,True,28.86,0
+35,Calculate server uptime for th...,True,27.0,0
+36,Summarize customer feedback fr...,True,23.29,0
+37,Check error logs for the payme...,True,21.65,0
+38,Calculate server uptime for th...,True,27.82,0
+39,Generate the revenue report fo...,True,28.57,0
+40,Produce a revenue report for Q...,True,30.29,0
+41,Check error logs for the payme...,True,21.84,0
+42,Generate the revenue report fo...,True,22.15,0
+43,Send an email to the marketing...,True,26.31,0
+44,Check error logs for the payme...,True,31.09,0
+45,Send an email to the marketing...,True,24.26,0
+46,Summarize customer feedback fr...,True,27.05,0
+47,Generate the revenue report fo...,True,22.73,0
+48,Produce a revenue report for Q...,True,27.2,0
+49,Calculate server uptime for th...,True,22.03,0
+50,Deploy the new frontend build ...,True,27.97,0
+51,Generate Q4 revenue report...,True,25.67,0
+52,Generate a revenue report for ...,True,25.99,0
+53,Produce a revenue report for Q...,True,22.56,0
+54,Generate the revenue report fo...,True,27.73,0
+55,Deploy the new frontend build ...,True,22.91,0
+56,Produce a revenue report for Q...,True,24.4,0
+57,Generate the revenue report fo...,True,26.01,0
+58,Fetch inventory levels for pro...,True,28.37,0
+59,Fetch inventory levels for pro...,True,29.27,0
+60,Send an email to the marketing...,True,29.93,0
+61,Produce a revenue report for Q...,True,24.31,0
+62,Fetch inventory levels for pro...,True,30.71,0
+63,Generate the revenue report fo...,True,24.86,0
+64,Send an email to the marketing...,True,29.55,0
+65,Generate the revenue report fo...,True,27.77,0
+66,Send an email to the marketing...,True,34.18,0
+67,Produce a revenue report for Q...,True,32.11,0
+68,Deploy the new frontend build ...,True,26.89,0
+69,Calculate server uptime for th...,True,30.86,0
+70,Check error logs for the payme...,True,25.84,0
+71,Deploy the new frontend build ...,True,22.63,0
+72,Summarize customer feedback fr...,True,26.08,0
+73,Generate the revenue report fo...,True,25.4,0
+74,Summarize customer feedback fr...,True,28.18,0
+75,Deploy the new frontend build ...,True,63.68,0
+76,Send an email to the marketing...,True,30.72,0
+77,Check error logs for the payme...,True,27.61,0
+78,Check error logs for the payme...,True,28.88,0
+79,Generate a revenue report for ...,True,30.69,0
+80,Check error logs for the payme...,True,29.58,0
+81,Calculate server uptime for th...,True,31.02,0
+82,Check error logs for the payme...,True,28.72,0
+83,Deploy the new frontend build ...,True,30.0,0
+84,Generate a revenue report for ...,True,28.39,0
+85,Deploy the new frontend build ...,True,41.01,0
+86,Deploy the new frontend build ...,True,28.7,0
+87,Generate Q4 revenue report...,True,32.26,0
+88,Generate a revenue report for ...,True,32.27,0
+89,Deploy the new frontend build ...,True,32.59,0
+90,Generate Q4 revenue report...,True,30.37,0
+91,Generate Q4 revenue report...,True,28.71,0
+92,Generate a revenue report for ...,True,29.85,0
+93,Summarize customer feedback fr...,True,32.5,0
+94,Send an email to the marketing...,True,32.14,0
+95,Calculate server uptime for th...,True,30.36,0
+96,Send an email to the marketing...,True,31.8,0
+97,Check error logs for the payme...,True,29.25,0
+98,Calculate server uptime for th...,True,78.56,0
+99,Check error logs for the payme...,True,61.31,0
+100,Deploy the new frontend build ...,True,43.11,0

@@ -32,7 +32,7 @@ async def run_benchmark(req: BenchmarkRequest):
     agent_b = NexusAgent(agent_id="AGENT_B")
     
     # 2. Agent A compresses the intent into NXP via Ollama
-    nxp_packet_str = agent_a.receive_english_task_and_send_packet(
+    nxp_packet_str, llm_trace = agent_a.receive_english_task_and_send_packet(
         task_description=english_msg, 
         target_agent="AGENT_B"
     )
@@ -42,12 +42,17 @@ async def run_benchmark(req: BenchmarkRequest):
     decoded_task = agent_b.receive_nxp_packet(nxp_packet_str)
     
     # 4. Calculate the massive token and latency savings
-    results = BenchmarkEngine.run_comparison(english_msg, nxp_packet_str)
+    # (We only measure the LLM packet size, not the raw network data attached to it)
+    llm_packet_only = nxp_packet_str.split("||PAYLOAD:")[0] if "||PAYLOAD:" in nxp_packet_str else nxp_packet_str
+    
+    is_cache_hit = "Cache Hit" in llm_trace["system_prompt"]
+    results = BenchmarkEngine.run_comparison(english_msg, llm_packet_only, is_cache_hit)
     
     # Return the metrics payload for the Mission Control dashboard
     return {
         "original_english": english_msg,
         "nexus_packet": nxp_packet_str,
-        "decoded_payload": decoded_task.__dict__,
-        "metrics": results
+        "decoded_payload": decoded_task,
+        "metrics": results,
+        "llm_trace": llm_trace
     }

@@ -26,12 +26,18 @@ class BenchmarkEngine:
         return {"tokens": tokens, "latency": round(latency, 3), "cost": cost}
 
     @staticmethod
-    def run_comparison(english_text: str, nxp_packet: str) -> dict:
+    def run_comparison(english_text: str, nxp_packet: str, is_cache_hit: bool = False) -> dict:
         eng_metrics = BenchmarkEngine.calculate_english_cost(english_text)
+        
+        if is_cache_hit:
+            # Absolute Zero Cost for cached tasks!
+            eng_metrics = {"tokens": 0, "latency": 0.0001, "cost": 0.0}
+            
         nxp_metrics = BenchmarkEngine.calculate_nxp_cost(nxp_packet)
         
-        token_savings = 1 - (nxp_metrics["tokens"] / eng_metrics["tokens"])
-        time_savings = 1 - (nxp_metrics["latency"] / eng_metrics["latency"])
+        # Prevent division by zero
+        token_savings = 1 - (nxp_metrics["tokens"] / eng_metrics["tokens"]) if eng_metrics["tokens"] > 0 else 1.0
+        time_savings = 1 - (nxp_metrics["latency"] / eng_metrics["latency"]) if eng_metrics["latency"] > 0 else 1.0
         
         # Calculate the "Swarm Multiplier" (e.g. 50 agent hops in a real enterprise)
         SWARM_HOPS = 50
